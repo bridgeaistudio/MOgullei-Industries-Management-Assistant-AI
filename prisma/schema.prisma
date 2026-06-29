@@ -1,0 +1,244 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         String     @id @default(cuid())
+  name       String
+  email      String     @unique
+  phone      String
+  role       String
+  status     String     @default("active")
+  avatar     String?
+  password   String
+  deletedAt  DateTime?
+  auditLogs  AuditLog[]
+  deliveries Delivery[] @relation("Driver")
+  tasks      Task[]
+}
+
+model Supplier {
+  id                  String    @id @default(cuid())
+  name                String
+  contactPerson       String
+  phone               String
+  materialsProvided   String[]
+  performanceScore    Int
+  averageDeliveryDays Int
+  deletedAt           DateTime?
+}
+
+model RawMaterial {
+  id                String             @id @default(cuid())
+  name              String
+  category          String
+  quantity          Float
+  unit              String
+  costPerUnit       Float
+  lowStockThreshold Float
+  supplier          String?
+  deletedAt         DateTime?
+  recipeIngredients RecipeIngredient[]
+}
+
+model Recipe {
+  id            String             @id @default(cuid())
+  name          String
+  expectedYield Float
+  notes         String
+  deletedAt     DateTime?
+  ingredients   RecipeIngredient[]
+  batches       Batch[]
+}
+
+model RecipeIngredient {
+  id            String      @id @default(cuid())
+  recipeId      String
+  rawMaterialId String
+  percentage    Float?
+  amount        Float
+  recipe        Recipe      @relation(fields: [recipeId], references: [id])
+  rawMaterial   RawMaterial @relation(fields: [rawMaterialId], references: [id])
+}
+
+model Batch {
+  id          String       @id @default(cuid())
+  recipeId    String
+  startDate   DateTime
+  cureEndDate DateTime
+  status      String
+  actualYield Float
+  soldCount   Int          @default(0)
+  defectCount Int          @default(0)
+  notes       String?
+  deletedAt   DateTime?
+  recipe      Recipe       @relation(fields: [recipeId], references: [id])
+  qualityLogs QualityLog[]
+  wasteLogs   WasteLog[]
+}
+
+model QualityLog {
+  id            String   @id @default(cuid())
+  batchId       String
+  date          DateTime
+  author        String
+  scentStrength String
+  texture       String
+  color         String
+  notes         String
+  batch         Batch    @relation(fields: [batchId], references: [id])
+}
+
+model WasteLog {
+  id              String   @id @default(cuid())
+  batchId         String
+  date            DateTime
+  quantity        Float
+  reason          String
+  notes           String
+  financialImpact Float
+  batch           Batch    @relation(fields: [batchId], references: [id])
+}
+
+model FinishedGood {
+  id             String      @id @default(cuid())
+  sku            String      @unique
+  scent          String
+  size           String
+  priceRetail    Float
+  priceWholesale Float
+  onHandCount    Int
+  deletedAt      DateTime?
+  orderItems     OrderItem[]
+}
+
+model Client {
+  id         String    @id @default(cuid())
+  name       String
+  type       String
+  email      String
+  phone      String
+  district   String?
+  region     String?
+  notes      String
+  totalSpent Float     @default(0)
+  deletedAt  DateTime?
+  orders     Order[]
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  clientId  String
+  date      DateTime
+  status    String
+  total     Float
+  deletedAt DateTime?
+  client    Client      @relation(fields: [clientId], references: [id])
+  items     OrderItem[]
+  delivery  Delivery?
+}
+
+model OrderItem {
+  id             String       @id @default(cuid())
+  orderId        String
+  finishedGoodId String
+  batchId        String?
+  quantity       Int
+  price          Float
+  order          Order        @relation(fields: [orderId], references: [id])
+  finishedGood   FinishedGood @relation(fields: [finishedGoodId], references: [id])
+}
+
+model Delivery {
+  id        String    @id @default(cuid())
+  orderId   String    @unique
+  driverId  String?
+  status    String
+  date      DateTime
+  address   String
+  notes     String?
+  deletedAt DateTime?
+  order     Order     @relation(fields: [orderId], references: [id])
+  driver    User?     @relation("Driver", fields: [driverId], references: [id])
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  authorId    String
+  status      String    @default("pending")
+  createdAt   DateTime  @default(now())
+  deletedAt   DateTime?
+  author      User      @relation(fields: [authorId], references: [id])
+}
+
+model Expense {
+  id          String    @id @default(cuid())
+  date        DateTime
+  category    String
+  amount      Float
+  description String
+  reference   String?
+  deletedAt   DateTime?
+}
+
+model Budget {
+  id           String @id @default(cuid())
+  category     String @unique
+  monthlyLimit Float
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  timestamp DateTime @default(now())
+  userId    String
+  action    String
+  details   String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Settings {
+  id                 String @id @default("singleton")
+  currency           String @default("UGX")
+  factoryName        String
+  registrationNumber String
+  tin                String
+  address            String
+  district           String
+  phone              String
+  email              String
+}
+
+model PublicOrder {
+  id              String            @id @default(cuid())
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  customerAddress String
+  paymentMethod   String
+  paymentStatus   String            @default("pending")
+  orderStatus     String            @default("pending")
+  subtotal        Float
+  total           Float
+  notes           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  items           PublicOrderItem[]
+}
+
+model PublicOrderItem {
+  id           String      @id @default(cuid())
+  orderId      String
+  productName  String
+  productType  String
+  quantity     Int
+  unitPrice    Float
+  total        Float
+  order        PublicOrder @relation(fields: [orderId], references: [id])
+}

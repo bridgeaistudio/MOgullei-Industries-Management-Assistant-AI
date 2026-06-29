@@ -1,0 +1,6 @@
+{
+  "name": "MOgullei Industries ERP",
+  "description": "A management system for a soap making cottage industry, tracking stock, sales, clients, and logistics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
