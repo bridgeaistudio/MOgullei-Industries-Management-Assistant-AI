@@ -27,6 +27,6 @@ export async function addWasteLogAction(data: {
   });
 
   await createAuditLog(session.userId, 'ADD_WASTE_LOG', `Logged waste for batch: ${data.batchId}`);
-  revalidatePath('/production');
+  revalidatePath('/dashboard/production');
   return { success: true };
 }

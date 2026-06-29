@@ -5,10 +5,7 @@ import { jwtVerify } from 'jose';
 const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret');
 
 const protectedPaths = [
-  '/dashboard', '/products', '/inventory', '/production',
-  '/sales', '/crm', '/logistics', '/traceability',
-  '/accounting', '/audit-logs', '/ai-analytics', '/ai-marketing',
-  '/users', '/settings',
+  '/dashboard',
 ];
 
 export async function middleware(request: NextRequest) {

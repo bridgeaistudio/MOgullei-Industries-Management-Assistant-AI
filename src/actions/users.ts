@@ -22,6 +22,6 @@ export async function addUserAction(formData: FormData) {
   });
 
   await createAuditLog(session.userId, 'ADD_USER', `Added new user: ${user.name}`);
-  revalidatePath('/users');
+  revalidatePath('/dashboard/users');
   return { success: true };
 }

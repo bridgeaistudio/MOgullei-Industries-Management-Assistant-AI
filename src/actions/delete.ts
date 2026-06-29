@@ -13,17 +13,17 @@ type DeletableModel =
   | 'Batch' | 'FinishedGood' | 'Order' | 'Delivery' | 'Task' | 'Expense';
 
 const MODEL_PATH_MAP: Record<DeletableModel, string> = {
-  User: '/users',
-  Client: '/crm',
-  Supplier: '/inventory',
-  RawMaterial: '/inventory',
-  Recipe: '/production',
-  Batch: '/production',
-  FinishedGood: '/products',
-  Order: '/sales',
-  Delivery: '/logistics',
+  User: '/dashboard/users',
+  Client: '/dashboard/crm',
+  Supplier: '/dashboard/inventory',
+  RawMaterial: '/dashboard/inventory',
+  Recipe: '/dashboard/production',
+  Batch: '/dashboard/production',
+  FinishedGood: '/dashboard/products',
+  Order: '/dashboard/sales',
+  Delivery: '/dashboard/logistics',
   Task: '/dashboard',
-  Expense: '/accounting',
+  Expense: '/dashboard/accounting',
 };
 
 function isCritical(model: string): model is CriticalModel {

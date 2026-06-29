@@ -23,6 +23,6 @@ export async function addExpenseAction(formData: FormData) {
   });
 
   await createAuditLog(session.userId, 'ADD_EXPENSE', `Logged expense: ${amount} UGX for ${category}`);
-  revalidatePath('/accounting');
+  revalidatePath('/dashboard/accounting');
   return { success: true };
 }

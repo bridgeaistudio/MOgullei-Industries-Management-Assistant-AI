@@ -25,6 +25,6 @@ export async function addQualityLogAction(
   });
 
   await createAuditLog(session.userId, 'ADD_QUALITY_LOG', `Added quality log for batch: ${batchId}`);
-  revalidatePath('/production');
+  revalidatePath('/dashboard/production');
   return { success: true };
 }

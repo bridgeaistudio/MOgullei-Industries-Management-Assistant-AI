@@ -23,6 +23,6 @@ export async function addClientAction(formData: FormData) {
   });
 
   await createAuditLog(session.userId, 'ADD_CLIENT', `Added new client: ${client.name}`);
-  revalidatePath('/crm');
+  revalidatePath('/dashboard/crm');
   return { success: true };
 }

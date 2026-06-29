@@ -22,21 +22,21 @@ export const Sidebar = () => {
         </div>
         <nav className="space-y-1">
           <NavItem to="/dashboard" icon={<LayoutDashboard className="w-5 h-5" />} label="Dashboard" />
-          <NavItem to="/products" icon={<Package className="w-5 h-5" />} label="Business Products" />
-          <NavItem to="/inventory" icon={<Package className="w-5 h-5" />} label="Stock & Supplies" />
-          <NavItem to="/production" icon={<Beaker className="w-5 h-5" />} label="Production" />
-          <NavItem to="/sales" icon={<ShoppingCart className="w-5 h-5" />} label="Orders & Sales" />
-          <NavItem to="/crm" icon={<Users className="w-5 h-5" />} label="Client CRM" />
-          <NavItem to="/logistics" icon={<Truck className="w-5 h-5" />} label="Logistics Chain" />
-          <NavItem to="/traceability" icon={<FileSearch className="w-5 h-5" />} label="Batch Traceability" />
-          <NavItem to="/accounting" icon={<Landmark className="w-5 h-5" />} label="Accounting" />
-          <NavItem to="/audit-logs" icon={<ShieldAlert className="w-5 h-5" />} label="Audit Trail" />
+          <NavItem to="/dashboard/products" icon={<Package className="w-5 h-5" />} label="Business Products" />
+          <NavItem to="/dashboard/inventory" icon={<Package className="w-5 h-5" />} label="Stock & Supplies" />
+          <NavItem to="/dashboard/production" icon={<Beaker className="w-5 h-5" />} label="Production" />
+          <NavItem to="/dashboard/sales" icon={<ShoppingCart className="w-5 h-5" />} label="Orders & Sales" />
+          <NavItem to="/dashboard/crm" icon={<Users className="w-5 h-5" />} label="Client CRM" />
+          <NavItem to="/dashboard/logistics" icon={<Truck className="w-5 h-5" />} label="Logistics Chain" />
+          <NavItem to="/dashboard/traceability" icon={<FileSearch className="w-5 h-5" />} label="Batch Traceability" />
+          <NavItem to="/dashboard/accounting" icon={<Landmark className="w-5 h-5" />} label="Accounting" />
+          <NavItem to="/dashboard/audit-logs" icon={<ShieldAlert className="w-5 h-5" />} label="Audit Trail" />
           <div className="pt-4 mt-4 border-t border-stone-100">
             <p className="px-4 text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">AI & System</p>
-            <NavItem to="/ai-marketing" icon={<Sparkles className="w-5 h-5 text-indigo-500" />} label="AI Marketing" />
-            <NavItem to="/ai-analytics" icon={<LineChart className="w-5 h-5 text-indigo-500" />} label="AI Analytics" />
-            <NavItem to="/users" icon={<UserCog className="w-5 h-5 text-blue-500" />} label="Staff Management" />
-            <NavItem to="/settings" icon={<Settings className="w-5 h-5 text-stone-500" />} label="Settings" />
+            <NavItem to="/dashboard/ai-marketing" icon={<Sparkles className="w-5 h-5 text-indigo-500" />} label="AI Marketing" />
+            <NavItem to="/dashboard/ai-analytics" icon={<LineChart className="w-5 h-5 text-indigo-500" />} label="AI Analytics" />
+            <NavItem to="/dashboard/users" icon={<UserCog className="w-5 h-5 text-blue-500" />} label="Staff Management" />
+            <NavItem to="/dashboard/settings" icon={<Settings className="w-5 h-5 text-stone-500" />} label="Settings" />
           </div>
         </nav>
       </div>

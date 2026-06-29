@@ -35,7 +35,7 @@ export async function updateSettingsAction(formData: FormData) {
   });
 
   await createAuditLog(session.userId, 'UPDATE_SETTINGS', 'Updated factory settings');
-  revalidatePath('/settings');
+  revalidatePath('/dashboard/settings');
   return { success: true };
 }
 
@@ -50,6 +50,6 @@ export async function updateBudgetAction(category: string, monthlyLimit: number)
   });
 
   await createAuditLog(session.userId, 'UPDATE_BUDGET', `Updated budget for ${category} to ${monthlyLimit}`);
-  revalidatePath('/accounting');
+  revalidatePath('/dashboard/accounting');
   return { success: true };
 }
